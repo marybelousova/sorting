@@ -1,28 +1,36 @@
 function split(wholeArray) {
     const middle = Math.ceil(wholeArray.length/2)
-    // console.log('middle:', middle)
     const secondHalf = wholeArray.slice(middle)
     const firstHalf = wholeArray.slice(0, middle)
 
     return [firstHalf, secondHalf];
   }
 
-  function merge(arrLeft, arrRight) {
-      let finalArr = [];
+  function merge(arrLeft, arrRight) {  
+    let finalArr = [];
       leftIndex = 0; 
       rightIndex= 0;
 
       while(arrLeft.length > leftIndex && arrRight.length > rightIndex) {
-          console.log('Left:', arrLeft.length,'Right:', arrRight.length)
         if(arrLeft[leftIndex] < arrRight[rightIndex]) {
-            finalArr.push(arr.left[leftIndex])
-            leftIndex ++
-            console.log(leftIndex)
+            finalArr.push(arrLeft[leftIndex])
+            leftIndex++
         } else {
             finalArr.push(arrRight[rightIndex])
-            rightIndex ++
-            console.log(rightIndex)
+            rightIndex++
         }
       }
       return finalArr
+      .concat(arrLeft.slice(leftIndex))
+      .concat(arrRight.slice(rightIndex))
+  }
+
+  function mergeSort(unsortedArr) {
+      if (unsortedArr.length <= 1) {
+          return unsortedArr;
+      };
+      
+      let [left, right] = split(unsortedArr)
+      
+      return merge(mergeSort(left), mergeSort(right))
   }
